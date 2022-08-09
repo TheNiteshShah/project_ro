@@ -1,20 +1,20 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            View Customers
+            View Stocks
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url() ?>dcadmin/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="<?php echo base_url() ?>dcadmin/Customers/view_customers"><i class="fa fa-rotate-left"></i> View Customers </a></li>
+            <li><a href="<?php echo base_url() ?>dcadmin/Stocks/view_stocks"><i class="fa fa-rotate-left"></i> View Stocks </a></li>
         </ol>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-lg-12">
-                <a class="btn btn-info cticket" href="<?php echo base_url() ?>dcadmin/Customers/add_customer" role="button" style="margin-bottom:12px;"> Add Customer</a>
+                <!-- <a class="btn btn-info cticket" href="<?php echo base_url() ?>dcadmin/Stocks/add_stock" role="button" style="margin-bottom:12px;"> Add Stocks</a> -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>View Customers</h3>
+                        <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>View Stocks</h3>
                     </div>
                     <div class="panel panel-default">
 
@@ -34,58 +34,58 @@
                                 $this->session->unset_userdata('emessage'); ?>
                             </div>
                         <?php } ?>
+
+
                         <div class="panel-body">
                             <div class="box-body table-responsive no-padding">
                                 <table class="table table-bordered table-hover table-striped" id="userTable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                            <th>Address</th>
-                                            <th>Status</th>
+                                            <th>Product Name</th>
+                                            <th>Total Quantity</th>
+                                            <th>Sell Quantity</th>
+                                            <th>Available Quantity</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1;
-                                        foreach ($customers_data->result() as $data) { ?>
+                                        foreach ($products_data->result() as $data) {
+                                            $stock = 0;
+                                            $sell_stock = 0;
+                                            $total = 0;
+                                            $available = 0;
+                                            foreach ($stocks_data->result() as $stocks) {
+                                                if ($stocks->pid == $data->id) {
+                                                    $stock = $stock + $stocks->qty;
+                                                }
+                                            }
+                                            // echo $stock;die();
+                                            foreach ($sells_data->result() as $sells) {
+                                                if ($sells->products_id == $data->id) {
+                                                    $sell_stock = $sell_stock + $sells->qty;
+                                                }
+                                            }
+                                            $available = $stock - $sell_stock;
+                                            $total = $sell_stock + $available;
+                                        ?>
                                             <tr>
                                                 <td><?php echo $i ?> </td>
                                                 <td><?php echo $data->name ?></td>
-                                                <td><?php echo $data->phone ?></td>
-                                                <td><?php echo $data->email ?></td>
-                                                <td><?php echo $data->address ?></td>
-                                                <td><?php if ($data->is_active == 1) { ?>
-                                                        <p class="label bg-green">Active</p>
-                                                    <?php } else { ?>
-                                                        <p class="label bg-yellow">Inactive</p>
-                                                    <?php } ?>
-                                                </td>
+                                                <td><?php echo $total ?></td>
+                                                <td><?php echo $sell_stock ?></td>
+                                                <td><?php echo $available ?></td>
+
                                                 <td>
                                                     <div class="btn-group" id="btns<?php echo $i ?>">
                                                         <div class="btn-group">
-                                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                Action <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu" role="menu">
+                                                            <a href="<?php echo base_url() ?>dcadmin/Stocks/add_stock/<?= base64_encode($data->id) ?>"><button type="button" class="btn btn-default " aria-expanded="false">
+                                                                    Add Stock </button></a>
 
-                                                                <?php if ($data->is_active == 1) { ?>
-                                                                    <li><a href="<?php echo base_url() ?>dcadmin/Customers/updateCustomerStatus/<?php echo base64_encode($data->id) ?>/inactive">Inactive</a></li>
-                                                                <?php } else { ?>
-                                                                    <li><a href="<?php echo base_url() ?>dcadmin/Customers/updateCustomerStatus/<?php echo base64_encode($data->id) ?>/active">Active</a></li>
-                                                                <?php } ?>
-                                                                <li><a href="<?php echo base_url() ?>dcadmin/Customers/update_customers/<?php echo base64_encode($data->id) ?>">Edit</a></li>
-                                                                <li><a href="javascript:;" class="dCnf" mydata="<?php echo $i ?>">Delete</a></li>
-                                                            </ul>
                                                         </div>
                                                     </div>
 
-                                                    <div style="display:none" id="cnfbox<?php echo $i ?>">
-                                                        <p> Are you sure delete this </p>
-                                                        <a href="<?php echo base_url() ?>dcadmin/Customers/delete_Customer/<?php echo base64_encode($data->id); ?>" class="btn btn-danger">Yes</a>
-                                                        <a href="javasript:;" class="cans btn btn-default" mydatas="<?php echo $i ?>">No</a>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php $i++;
@@ -118,6 +118,7 @@
             $("#cnfbox" + i).show();
 
         });
+
         $(document.body).on('click', '.cans', function() {
             var i = $(this).attr("mydatas");
             console.log(i);

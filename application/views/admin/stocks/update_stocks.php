@@ -6,7 +6,6 @@
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url() ?>dcadmin/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="<?php echo base_url() ?>dcadmin/Products/view_products"><i class="fa fa-rotate-left"></i> View Product </a></li>
-            <!-- <li class="active">View Categories</li> -->
         </ol>
     </section>
     <section class="content">
@@ -65,17 +64,10 @@
                                         </tr>
                                     </table>
                                 </div>
-
                             </form>
-
                         </div>
-
-
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     </section>
