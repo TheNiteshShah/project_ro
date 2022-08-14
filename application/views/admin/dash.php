@@ -18,7 +18,7 @@
           <!-- Info boxes -->
           <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="<?=base_url()?>dcadmin/System/view_team">
+                <a href="<?=base_url()?>dcadmin/Customers/view_customers">
               <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-user" aria-hidden="true"></i>
 </i></span>
@@ -27,8 +27,10 @@
                   <span class="info-box-number"><?=$count_costomers?></span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
+            </a>
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
+              <a href="<?=base_url()?>dcadmin/Products/view_products">
               <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="fa fa-tags"></i></span>
                 <div class="info-box-content">
@@ -36,8 +38,10 @@
                   <span class="info-box-number"><?=$count_products?></span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
+            </a>
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
+              <a href="<?=base_url()?>dcadmin/Sells/view_sells">
               <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
                 <div class="info-box-content">
@@ -45,13 +49,31 @@
                   <span class="info-box-number">₹<?=$count_sells?></span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
+            </a>
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
+              <a href="<?=base_url()?>dcadmin/Open_services/view_open_services">
               <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-wrench"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Total Open Services</span>
                   <span class="info-box-number"><?=$count_services?></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </a>
+            </div><!-- /.col -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-purple"><i class="fa fa-file"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">View Report</span>
+                      <form action="<?= base_url() ?>dcadmin/Home/view_report" method="post" enctype="multipart/form-data">
+                        <div style="margin-top:5px">
+                          <input type="date" name="from_date" required placeholder="From Date"  class="form-control" value="" style="display: inline;width:auto">
+                          <input type="date" name="to_date" required placeholder="To Date" class="form-control" value="" style="display: inline;width:auto">
+                          <button type="submit" class="btn btn-info cticket">Submit</button>
+                        </div>
+                      </form>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->

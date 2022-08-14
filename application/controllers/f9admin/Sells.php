@@ -17,6 +17,7 @@ class Sells extends CI_finecontrol
 
             $this->db->select('*');
             $this->db->from('tbl_sells');
+            $this->db->where('service_id',null);
             $data['sells_data'] = $this->db->get();
             $data['heading'] = 'View Sells';
             $this->load->view('admin/common/header_view', $data);
@@ -66,11 +67,15 @@ class Sells extends CI_finecontrol
                 $this->form_validation->set_rules('customer_id', 'customer_id', 'required|xss_clean|trim');
                 $this->form_validation->set_rules('products_id', 'products_id', 'required|xss_clean|trim');
                 $this->form_validation->set_rules('qty', 'qty', 'required|xss_clean|trim');
+                $this->form_validation->set_rules('inss_date', 'inss_date', 'required|xss_clean|trim');
+                $this->form_validation->set_rules('shipp_address', 'shipp_address', 'required|xss_clean|trim');
 
                 if ($this->form_validation->run() == TRUE) {
                     $customer_id = $this->input->post('customer_id');
                     $products_id = $this->input->post('products_id');
                     $qty = $this->input->post('qty');
+                    $inss_date = $this->input->post('inss_date');
+                    $shipp_address = $this->input->post('shipp_address');
 
                     $ip = $this->input->ip_address();
                     date_default_timezone_set("Asia/Calcutta");
@@ -108,6 +113,8 @@ class Sells extends CI_finecontrol
                                 'customer_id' => $customer_id,
                                 'products_id' => $products_id,
                                 'qty' => $qty,
+                                'inss_date' => $inss_date,
+                                'shipp_address' => $shipp_address,
                                 'ip' => $ip,
                                 'added_by' => $addedby,
                                 'date' => $cur_date
@@ -139,6 +146,8 @@ class Sells extends CI_finecontrol
                             'customer_id' => $customer_id,
                             'products_id' => $products_id,
                             'qty' => $qty,
+                            'inss_date' => $inss_date,
+                            'shipp_address' => $shipp_address,
                         );
                         $this->db->where('id', $idw);
                         $last_id = $this->db->update('tbl_sells', $data_insert);

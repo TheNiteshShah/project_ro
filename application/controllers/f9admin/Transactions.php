@@ -52,7 +52,7 @@ class Transactions extends CI_finecontrol
 
                 $this->form_validation->set_rules('type', 'type', 'required|xss_clean|trim');
                 $this->form_validation->set_rules('amount', 'amount', 'required|xss_clean|trim');
-                $this->form_validation->set_rules('remarks', 'remarks', 'required|xss_clean|trim');
+                $this->form_validation->set_rules('remarks', 'remarks', 'xss_clean|trim');
                 $this->form_validation->set_rules('date', 'date', 'required|xss_clean|trim');
 
                 if ($this->form_validation->run() == TRUE) {
